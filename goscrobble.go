@@ -9,10 +9,10 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"os"
 	"sort"
 	"strconv"
 	"strings"
-	"syscall"
 	"time"
 )
 
@@ -63,7 +63,7 @@ func main() {
 	resp, err := http.Post(u.String(), "", strings.NewReader(q.Encode()))
 	if err != nil {
 		fmt.Println(err)
-		syscall.Exit(1)
+		os.Exit(1)
 	}
 
 	defer resp.Body.Close()
@@ -74,13 +74,13 @@ func main() {
 	err = xml.Unmarshal([]byte(body), &v)
 	if err != nil {
 		fmt.Printf("error: %v", err)
-		syscall.Exit(2)
+		os.Exit(2)
 	}
 
 	if v.Status == "ok" {
-		syscall.Exit(0)
+		os.Exit(0)
 	} else {
-		syscall.Exit(3)
+		os.Exit(3)
 	}
 }
 
